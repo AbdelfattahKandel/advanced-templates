@@ -1,0 +1,63 @@
+<div class="image-uploader-container" [dir]="languageService.isAr() ? 'rtl' : 'ltr'">
+  <!-- Add Image Button at the top -->
+  <div class="add-button mb-4">
+    <p-button 
+      icon="pi pi-plus" 
+      (click)="addImage()"
+      [label]="languageService.isAr() ? 'إضافة صورة' : 'Add Image'"
+      styleClass="p-button-outlined">
+    </p-button>
+  </div>
+
+  <!-- Image Cards -->
+  <div class="image-cards-container">
+    @for (ctrl of images.controls; let i = $index; track i) {
+      <div class="image-card border-2 border-${themeService.theme() === 'dark' ? 'dark' : 'light'} rounded-md  bg-${themeService.theme() === 'dark' ? 'light' : 'dark'}">
+        <!-- Image Preview -->
+        <div class="image-preview">
+          @if (ctrl.value) {
+            <p-image 
+              [src]="ctrl.value" 
+              alt="Image" 
+              styleClass="preview-img">
+            </p-image>
+          } @else {
+            <div class="empty-preview">
+              <i class="pi pi-image" style="font-size: 2rem"></i>
+              <span>{{ languageService.isAr() ? 'لا توجد صورة' : 'No Image' }}</span>
+            </div>
+          }
+        </div>
+        
+        
+        <!-- Card Footer with Actions -->
+        <div class="card-footer bg-${themeService.theme() === 'dark' ? 'dark' : 'light'}">
+          <input 
+            type="file" 
+            accept="image/*" 
+            #fileInput 
+            (change)="onFileSelected($event, i)" 
+            class="file-input" />
+          
+          <div class="flex gap-2">
+            <p-button 
+              icon="pi pi-upload" 
+              (click)="fileInput.click()"
+              [label]="languageService.isAr() ? 'رفع' : 'Upload'"
+              styleClass="p-button-outlined p-button-sm flex-1"
+              [style]="{'min-width': '100px'}">
+            </p-button>
+
+            <p-button 
+              icon="pi pi-trash" 
+              (click)="removeImage(i)"
+              styleClass="p-button-outlined p-button-danger p-button-sm"
+              [pTooltip]="languageService.isAr() ? 'حذف' : 'Delete'" 
+              tooltipPosition="top">
+            </p-button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

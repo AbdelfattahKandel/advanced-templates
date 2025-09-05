@@ -1,0 +1,13 @@
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-password,
+:host ::ng-deep .p-inputwrapper,
+:host ::ng-deep .p-select,
+:host ::ng-deep .p-multiselect
+ {
+    
+  width: 100% !important;
+}
+.invalid {
+  border-color: red;
+  background-color: #ffe6e6;
+}

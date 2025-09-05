@@ -1,0 +1,44 @@
+.video-uploader-container {
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .video-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .video-card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .video-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  .video-preview {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .empty-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+  }
+  
+  .card-footer {
+    padding: 1rem;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  

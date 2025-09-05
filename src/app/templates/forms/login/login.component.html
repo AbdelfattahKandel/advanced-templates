@@ -1,0 +1,56 @@
+<div class="login-container flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md p-8 rounded-lg shadow-md border">
+      
+      <!-- Logo and Welcome -->
+      <div class="text-center mb-8">
+        <div class="logo-container mb-4">
+          <i class="pi pi-user-circle text-6xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold mb-2">{{ isAr() ? 'مرحباً بعودتك' : 'Welcome Back' }}</h1>
+        <p class="text-sm">{{ isAr() ? 'سجل الدخول للمتابعة' : 'Sign in to continue' }}</p>
+      </div>
+  
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" class="space-y-5">
+  
+        <!-- Username -->
+        <p-inputgroup class="w-full">
+          <p-inputgroup-addon>
+            <i class="pi pi-user"></i>
+          </p-inputgroup-addon>
+          <input 
+            pInputText
+            formControlName="username"
+            [placeholder]="isAr() ? 'أدخل اسم المستخدم' : 'Enter your username'"
+            class="w-full"
+          >
+        </p-inputgroup>
+  
+        <!-- Password -->
+        <p-inputgroup class="w-full">
+          <p-inputgroup-addon>
+            <i class="pi pi-lock"></i>
+          </p-inputgroup-addon>
+          <p-password
+            formControlName="password"
+            [placeholder]="isAr() ? 'كلمة المرور' : 'Password'"
+            toggleMask="true"
+            [feedback]="true"
+            class="w-full"
+          ></p-password>
+        </p-inputgroup>
+  
+        <!-- Submit Button -->
+        <button
+          pButton
+          pRipple
+          type="button"
+          (click)="submit()"
+          label="{{ isAr() ? 'تسجيل الدخول' : 'Sign In' }}"
+          class="w-full"
+        ></button>
+  
+      </form>
+    </div>
+  </div>
+  

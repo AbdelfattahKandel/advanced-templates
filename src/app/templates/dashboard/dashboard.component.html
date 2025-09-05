@@ -1,0 +1,260 @@
+<div class="p-4 space-y-6 w-3/4 mx-auto my-12">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-bold">Main Dashboard</h1>
+      <div class="flex items-center gap-3">
+        <button pButton type="button" label="Export" icon="pi pi-download" class="p-button-outlined"></button>
+        <button pButton type="button" label="Create" icon="pi pi-plus" class="p-button-primary"></button>
+      </div>
+    </div>
+  
+    <!-- KPI row -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <p-card>
+        <div class="flex justify-between items-center">
+          <div>
+            <div class="text-sm text-gray-500">Revenue</div>
+            <div class="text-xl font-bold">${{ kpis.revenue }}</div>
+            <div class="text-xs text-green-600">+12% from last month</div>
+          </div>
+          <i class="pi pi-dollar text-3xl text-green-500"></i>
+        </div>
+      </p-card>
+  
+      <p-card>
+        <div class="flex justify-between items-center">
+          <div>
+            <div class="text-sm text-gray-500">Orders</div>
+            <div class="text-xl font-bold">{{ kpis.orders }}</div>
+            <div class="text-xs text-blue-600">Active orders</div>
+          </div>
+          <i class="pi pi-shopping-cart text-3xl text-blue-500"></i>
+        </div>
+      </p-card>
+  
+      <p-card>
+        <div class="flex justify-between items-center">
+          <div>
+            <div class="text-sm text-gray-500">Customers</div>
+            <div class="text-xl font-bold">{{ kpis.customers }}</div>
+            <div class="text-xs text-purple-600">Returning rate 45%</div>
+          </div>
+          <i class="pi pi-users text-3xl text-purple-500"></i>
+        </div>
+      </p-card>
+  
+      <p-card>
+        <div class="flex justify-between items-center">
+          <div>
+            <div class="text-sm text-gray-500">Conversion</div>
+            <div class="text-xl font-bold">{{ kpis.conversion }}%</div>
+            <div class="text-xs text-orange-600">Quarterly growth</div>
+          </div>
+          <i class="pi pi-line-chart text-3xl text-orange-500"></i>
+        </div>
+      </p-card>
+    </div>
+  
+    <!-- Big area: charts + quick form -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- charts (spanning 2 cols on large) -->
+      <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <p-card header="Revenue Trend">
+          <p-chart type="line" [data]="lineData" [options]="chartOptions" style="height:260px"></p-chart>
+        </p-card>
+  
+        <p-card header="Orders (Monthly)">
+          <p-chart type="bar" [data]="barData" [options]="chartOptions" style="height:260px"></p-chart>
+        </p-card>
+  
+        <p-card header="Sales by Category">
+          <p-chart type="pie" [data]="pieData" [options]="chartOptions" style="height:260px"></p-chart>
+        </p-card>
+  
+        <p-card header="Top Products">
+          <p-table [value]="products.slice(0,5)" [rows]="5" [paginator]="true" size="small">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Sales</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-p>
+              <tr>
+                <td><img [src]="p.image" alt="{{p.name}}" width="48" /></td>
+                <td>{{ p.name }}</td>
+                <td>{{ p.category }}</td>
+                <td><span class="font-semibold">{{ p.stock }}</span></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </div>
+  
+      <!-- quick controls & upload -->
+      <div class="space-y-6">
+        <p-card header="Quick Add Product">
+          <form [formGroup]="quickForm" (ngSubmit)="addQuickProduct()" class="space-y-3">
+            <div>
+              <label class="block text-sm">Name</label>
+              <input pInputText formControlName="name" type="text" class="w-full" />
+            </div>
+  
+            <div>
+              <label class="block text-sm">Category</label>
+              <p-dropdown [options]="categories" optionLabel="toString" formControlName="category" placeholder="Select category"></p-dropdown>
+            </div>
+  
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm">Price</label>
+                <p-inputNumber formControlName="price" [mode]="'currency'" currency="USD" class="w-full"></p-inputNumber>
+              </div>
+              <div>
+                <label class="block text-sm">Stock</label>
+                <p-inputNumber formControlName="stock" class="w-full"></p-inputNumber>
+              </div>
+            </div>
+  
+            <div class="flex justify-end gap-2">
+              <button pButton type="button" label="Reset" class="p-button-outlined" (click)="quickForm.reset({name:'',category:null,price:0,stock:0,available:true})"></button>
+              <button pButton type="submit" label="Add" class="p-button-success"></button>
+            </div>
+          </form>
+        </p-card>
+  
+        <p-card header="Upload Assets">
+          <p-fileUpload name="files[]" customUpload="true" (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Choose" uploadLabel="Upload"></p-fileUpload>
+        </p-card>
+  
+        <p-card header="Filters">
+          <div class="space-y-3">
+            <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" placeholder="Filter by category"></p-dropdown>
+            <div class="flex gap-2">
+              <button pButton type="button" label="Apply" class="p-button-primary" (click)="$event"></button>
+              <button pButton type="button" label="Clear" class="p-button-text" (click)="selectedCategory = null"></button>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  
+    <!-- tables row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <p-card header="Products">
+        <p-table [value]="filteredProducts()" [paginator]="true" [rows]="8" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-p>
+            <tr>
+              <td><img [src]="p.image" width="48" alt="{{p.name}}"></td>
+              <td>{{ p.name }}</td>
+              <td>{{ p.category }}</td>
+              <td>{{ p.price | currency:'USD' }}</td>
+              <td>{{ p.stock }}</td>
+              <td><p-tag [value]="p.status" [severity]="getSeverity(p.status)"></p-tag></td>
+              <td>
+                <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text" (click)="openEdit(p)"></button>
+                <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" (click)="deleteProduct(p)"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+  
+      <p-card header="Recent Orders">
+        <p-table [value]="orders" [paginator]="true" [rows]="6" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Order</th>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-o>
+            <tr>
+              <td>{{ o.id }}</td>
+              <td>{{ o.date }}</td>
+              <td>{{ o.customer }}</td>
+              <td><p-tag [value]="o.status" [severity]="getSeverity(o.status)"></p-tag></td>
+              <td>{{ o.total | currency:'USD' }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  
+    <!-- activity + settings -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <p-card header="Activity Feed" class="lg:col-span-2">
+        <div *ngFor="let a of activities" class="flex items-center gap-3 p-2 border-b last:border-b-0">
+          <p-avatar label="{{ a.user?.slice(0,1) }}" styleClass="p-mr-2"></p-avatar>
+          <div class="flex-1">
+            <div class="text-sm">{{ a.text }}</div>
+            <div class="text-xs text-gray-500">{{ a.time }}</div>
+          </div>
+        </div>
+      </p-card>
+  
+      <p-card header="Settings">
+        <div class="space-y-3">
+          <div>
+            <div class="text-sm">Enable Notifications</div>
+            <p-checkbox ></p-checkbox>
+          </div>
+          <div>
+            <div class="text-sm">Auto backup</div>
+            <p-checkbox ></p-checkbox>
+          </div>
+          <div>
+            <button pButton label="Save Settings" class="p-button-primary w-full"></button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  
+    <!-- edit dialog -->
+    <p-dialog header="Edit Product" [(visible)]="displayProductDialog" [modal]="true" [style]="{width: '450px'}">
+      <div *ngIf="editingProduct">
+        <div class="p-fluid">
+          <div class="p-field">
+            <label>Name</label>
+            <input pInputText [(ngModel)]="editingProduct.name"/>
+          </div>
+          <div class="p-field">
+            <label>Category</label>
+            <p-dropdown [options]="categories" [(ngModel)]="editingProduct.category"></p-dropdown>
+          </div>
+          <div class="p-field grid grid-cols-2 gap-2">
+            <div>
+              <label>Price</label>
+              <p-inputNumber [(ngModel)]="editingProduct.price" [mode]="'currency'" currency="USD"></p-inputNumber>
+            </div>
+            <div>
+              <label>Stock</label>
+              <p-inputNumber [(ngModel)]="editingProduct.stock"></p-inputNumber>
+            </div>
+          </div>
+        </div>
+  
+        <div class="flex justify-end gap-2 mt-3">
+          <button pButton label="Cancel" (click)="displayProductDialog=false" class="p-button-text"></button>
+          <button pButton label="Save" (click)="saveEdit()" class="p-button-primary"></button>
+        </div>
+      </div>
+    </p-dialog>
+  </div>
+  

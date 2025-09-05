@@ -1,0 +1,107 @@
+<div class="grid grid-cols-2 w-3/4 mx-auto my-12 gap-6 p-6">
+    <!-- KPIs -->
+    <div class="col-span-1 lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <p-card [header]="isAr() ? 'الإيرادات' : 'Revenue'" class="shadow-md rounded-2xl">
+        <div class="text-2xl font-bold text-green-600 mb-1">$12,430</div>
+        <div class="text-sm text-gray-500">+12% {{isAr() ? 'من الشهر السابق' : 'from last month'}}</div>
+      </p-card>
+  
+      <p-card [header]="isAr() ? 'الطلبات' : 'Orders'" class="shadow-md rounded-2xl">
+        <div class="text-2xl font-bold text-blue-600 mb-1">742</div>
+        <div class="text-sm text-gray-500">{{isAr() ? 'الطلبات النشطة' : 'Active orders'}}</div>
+      </p-card>
+  
+      <p-card [header]="isAr() ? 'العملاء' : 'Customers'" class="shadow-md rounded-2xl">
+        <div class="text-2xl font-bold text-purple-600 mb-1">1,209</div>
+        <div class="text-sm text-gray-500">{{isAr() ? 'النسبة العا' : 'Returning rate 45%'}}</div>
+      </p-card>
+  
+      <p-card [header]="isAr() ? 'النمو' : 'Growth'" class="shadow-md rounded-2xl">
+        <div class="text-2xl font-bold text-orange-600 mb-1">18%</div>
+        <div class="text-sm text-gray-500">{{isAr() ? 'النمو السنوي' : 'Quarterly growth'}}</div>
+      </p-card>
+    </div>
+  
+    <!-- Line Chart -->
+    <div class="col-span-1 h-1/2">
+      <p-card [header]="isAr() ? 'الإيرادات' : 'Revenue Trend'" class="shadow-md rounded-2xl">
+        <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+      </p-card>
+    </div>
+  
+    <!-- Pie Chart -->
+    <div class="col-span-1 ">
+      <p-card [header]="isAr() ? 'الإيرادات' : 'Sales by Category'" class="shadow-md rounded-2xl">
+        <p-chart type="pie" [data]="pieData" [options]="pieOptions"></p-chart>
+      </p-card>
+    </div>
+  
+    <!-- Recent Orders Table -->
+    <div class="col-span-1">
+      <p-card [header]="isAr() ? 'الإيرادات' : 'Recent Orders'" class="shadow-md rounded-2xl">
+        <p-table [value]="orders" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{isAr() ? 'رقم الطلب' : 'Order ID'}}</th>
+              <th>{{isAr() ? 'العميل' : 'Customer'}}</th>
+              <th>{{isAr() ? 'الحالة' : 'Status'}}</th>
+              <th>{{isAr() ? 'المجموع' : 'Total'}}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.customer }}</td>
+              <td>
+                <p-tag [value]="order.status" [severity]="getSeverity(order.status)"></p-tag>
+              </td>
+              <td>{{ order.total | currency:'USD' }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  
+    <!-- Customer Segments -->
+    <div class="col-span-1">
+      <p-card [header]="isAr() ? 'العملاء الجدد' : 'Customer Segments'" class="shadow-md rounded-2xl space-y-4">
+        <div>
+          <div class="text-sm mb-1">{{isAr() ? 'العملاء الجدد' : 'New Customers'}} (30%)</div>
+          <p-progressBar [value]="30"></p-progressBar>
+        </div>
+        <div>
+          <div class="text-sm mb-1">{{isAr() ? 'العملاء العاديين' : 'Returning Customers'}} (55%)</div>
+          <p-progressBar [value]="55"></p-progressBar>
+        </div>
+        <div>
+          <div class="text-sm mb-1">{{isAr() ? 'العملاء البارزين' : 'VIP Customers'}} (15%)</div>
+          <p-progressBar [value]="15"></p-progressBar>
+        </div>
+      </p-card>
+    </div>
+  
+    <!-- Top Products -->
+    <div class="col-span-1 lg:col-span-2">
+      <p-card [header]="isAr() ? 'المنتجات الأكثر شعبية' : 'Top Products'" class="shadow-md rounded-2xl">
+        <p-table [value]="topProducts" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{isAr() ? 'الصورة' : 'Image'}}</th>
+              <th>{{isAr() ? 'المنتج' : 'Product'}}</th>
+              <th>{{isAr() ? 'التصنيف' : 'Category'}}</th>
+              <th>{{isAr() ? 'المبيعات' : 'Sales'}}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product>
+            <tr>
+              <td><img [src]="'assets/images/' + product.image" alt="{{ product.name }}" class="w-10 h-10 rounded-md" /></td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.category }}</td>
+              <td>{{ product.sales }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  </div>
+  

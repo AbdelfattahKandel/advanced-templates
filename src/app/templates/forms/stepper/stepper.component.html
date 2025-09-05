@@ -1,0 +1,320 @@
+<div class="card flex justify-center w-3/4 mx-auto mt-6">
+  <p-stepper [(value)]="activeStep" class="basis-[100rem]">
+    <p-step-list>
+      <p-step [value]="1">
+        <ng-template #content let-value="value" let-activateCallback="activateCallback">
+          <button class="bg-transparent border-0 flex flex-col items-center" (click)="activateCallback()">
+            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center mb-1" [ngClass]="{
+                'bg-primary text-primary-contrast border-primary':
+                  value <= activeStep,
+                'border-surface': value > activeStep
+              }">
+              <i class="pi pi-user"></i>
+            </span>
+            <div class="text-sm font-medium text-center">
+              {{ isAr() ? "البيانات الاساسية" : "Basic Data" }}
+            </div>
+          </button>
+        </ng-template>
+      </p-step>
+
+      <p-step [value]="2">
+        <ng-template #content let-value="value" let-activateCallback="activateCallback">
+          <button class="bg-transparent border-0 flex flex-col items-center" (click)="activateCallback()">
+            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center mb-1" [ngClass]="{
+                'bg-primary text-primary-contrast border-primary':
+                  value <= activeStep,
+                'border-surface': value > activeStep
+              }">
+              <i class="pi pi-camera"></i>
+            </span>
+            <div class="text-sm font-medium text-center">
+              {{ isAr() ? "رفع الوسائط " : "Upload Media" }}
+            </div>
+          </button>
+        </ng-template>
+      </p-step>
+
+      <p-step [value]="3">
+        <ng-template #content let-value="value" let-activateCallback="activateCallback">
+          <button class="bg-transparent border-0 flex flex-col items-center" (click)="activateCallback()">
+            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center mb-1" [ngClass]="{
+                'bg-primary text-primary-contrast border-primary':
+                  value <= activeStep,
+                'border-surface': value > activeStep
+              }">
+              <i class="pi pi-list"></i>
+            </span>
+            <div class="text-sm font-medium text-center">
+              {{ isAr() ? "البيانات الإضافية" : " Additional Data" }}
+            </div>
+          </button>
+        </ng-template>
+      </p-step>
+      <p-step [value]="4">
+        <ng-template #content let-value="value" let-activateCallback="activateCallback">
+          <button class="bg-transparent border-0 flex flex-col items-center" (click)="activateCallback()">
+            <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center mb-1" [ngClass]="{
+                'bg-primary text-primary-contrast border-primary':
+                  value <= activeStep,
+                'border-surface': value > activeStep
+              }">
+              <i class="pi pi-check"></i>
+            </span>
+            <div class="text-sm font-medium text-center">
+              {{ isAr() ? "المراجعة والارسال " : " Review & Submit" }}
+            </div>
+          </button>
+        </ng-template>
+      </p-step>
+    </p-step-list>
+
+    <p-step-panels>
+      <!-- Step 1 -->
+      <p-step-panel [value]="1">
+        <ng-template #content let-activateCallback="activateCallback">
+          <div class="flex flex-col h-auto gap-4">
+            <div
+              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto p-6">
+              <form [formGroup]="basicData()" (ngSubmit)="onSubmit()" class="w-full">
+
+                <!-- Title Input with Validation -->
+                <div class="mb-4">
+                  <p-inputgroup class="mb-2">
+                    <p-inputgroup-addon><i class="pi pi-user"></i></p-inputgroup-addon>
+                    <input pInputText formControlName="title" [placeholder]="isAr() ? 'العنوان' : 'Title'"
+                      [class]="getFieldValidationClass(basicData().get('title'))"
+                      [appValidateForms]="{ fields: ['required', 'minLength', 'noNumbers'], value: 3 }" />
+                  </p-inputgroup>
+
+                  <!-- Title Validation Messages -->
+                  @if (shouldShowValidation(basicData().get('title'))) {
+                  <div class="validation-messages">
+                    @if (basicData().get('title')?.hasError('required')) {
+                    <small class="text-red-500 text-xs flex items-center gap-1">
+                      <i class="pi pi-exclamation-triangle"></i>
+                      {{ isAr() ? 'العنوان مطلوب' : 'Title is required' }}
+                    </small>
+                    }
+                    @if (basicData().get('title')?.hasError('noNumbers')) {
+                    <small class="text-red-500 text-xs flex items-center gap-1">
+                      <i class="pi pi-exclamation-triangle"></i>
+                      {{ isAr() ? 'العنوان لا يجب أن يحتوي على أرقام' : 'Title should not contain numbers' }}
+                    </small>
+                    }
+                  </div>
+                  }
+                </div>
+
+                <!-- Description Input with Validation -->
+                <div class="mb-4">
+                  <p-inputgroup class="mb-2">
+                    <p-inputgroup-addon><i class="pi pi-user-edit"></i></p-inputgroup-addon>
+                    <input pInputText formControlName="description" [placeholder]="isAr() ? 'الوصف' : 'Description'"
+                      [class]="getFieldValidationClass(basicData().get('description'))"
+                      [appValidateForms]="{ fields: ['required', 'minLength'], value: 10 }" />
+                  </p-inputgroup>
+
+                  <!-- Description Validation Messages -->
+                  @if (shouldShowValidation(basicData().get('description'))) {
+                  <div class="validation-messages">
+                    @if (basicData().get('description')?.hasError('required')) {
+                    <small class="text-red-500 text-xs flex items-center gap-1">
+                      <i class="pi pi-exclamation-triangle"></i>
+                      {{ isAr() ? 'الوصف مطلوب' : 'Description is required' }}
+                    </small>
+                    }
+                    @if (basicData().get('description')?.hasError('minLength')) {
+                    <small class="text-red-500 text-xs flex items-center gap-1">
+                      <i class="pi pi-exclamation-triangle"></i>
+                      {{ isAr() ? 'الوصف يجب أن يكون على الأقل 10 أحرف' : 'Description must be at least 10 characters'
+                      }}
+                    </small>
+                    }
+                  </div>
+                  }
+                </div>
+
+                <!-- Password Input with Validation -->
+                <div class="mb-4">
+                  <p-inputgroup class="mb-2">
+                    <p-inputgroup-addon><i class="pi pi-lock"></i></p-inputgroup-addon>
+                    <p-password formControlName="password" [placeholder]="isAr() ? 'كلمة المرور' : 'Password'"
+                      [feedback]="true" toggleMask="true" class="w-full"
+                      [class]="getFieldValidationClass(basicData().get('password'))"
+                      [appValidateForms]="{ fields: ['required', 'minLength', 'pattern'], value: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$' }">
+                    </p-password>
+                  </p-inputgroup>
+
+                  <!-- Password Validation Messages -->
+                  @if (shouldShowValidation(basicData().get('password'))) {
+                  <div class="validation-messages">
+                    @if (basicData().get('password')?.hasError('required')) {
+                    <small class="text-red-500 text-xs flex items-center gap-1">
+                      <i class="pi pi-exclamation-triangle"></i>
+                      {{ isAr() ? 'كلمة المرور مطلوبة' : 'Password is required' }}
+                    </small>
+                    }
+                    @if (basicData().get('password')?.hasError('minLength')) {
+                    <small class="text-red-500 text-xs flex items-center gap-1">
+                      <i class="pi pi-exclamation-triangle"></i>
+                      {{ isAr() ? 'كلمة المرور يجب أن تكون على الأقل 8 أحرف' : 'Password must be at least 8 characters'
+                      }}
+                    </small>
+                    }
+                    @if (basicData().get('password')?.hasError('pattern')) {
+                    <small class="text-red-500 text-xs flex items-center gap-1">
+                      <i class="pi pi-exclamation-triangle"></i>
+                      {{ isAr() ? 'كلمة المرور يجب أن تحتوي على: حرف كبير، حرف صغير، رقم، ورمز خاص' : 'Password must
+                      contain: uppercase, lowercase, number, and special character' }}
+                    </small>
+                    }
+                  </div>
+                  }
+                </div>
+              </form>
+            </div>
+
+            <div class="flex justify-end mt-4">
+              <p-button [label]="isAr() ? 'التالي' : 'Next'" [icon]="isAr() ? 'pi pi-arrow-left' : 'pi pi-arrow-right'"
+                [iconPos]="isAr() ? 'left' : 'right'" [disabled]="!basicData().valid" (onClick)="activateCallback(2)" />
+            </div>
+          </div>
+        </ng-template>
+      </p-step-panel>
+
+      <!-- Step 2 -->
+      <p-step-panel [value]="2">
+        <ng-template #content let-activateCallback="activateCallback">
+          <div
+            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950">
+            <form [formGroup]="uploadMedia()">
+              <!-- Title -->
+              <p-floatlabel variant="on" class="mx-4 my-4 w-1/2">
+                <input pInputText id="media_title" formControlName="title"
+                  [appValidateForms]="{ fields: ['required', 'minLength'], value: 3 }" />
+                <label for="media_title">{{ isAr() ? "عنوان الوسائط" : "Media Title" }}</label>
+              </p-floatlabel>
+              <!-- Images -->
+              <div class="mx-4">
+                <h3 class="text-lg font-bold w-full mx-4">
+                  {{ isAr() ? "الصور" : "Images" }}
+                </h3>
+                <app-image-uploader [images]="images()"></app-image-uploader>
+              </div>
+              <!-- Videos -->
+              <div class="mx-4">
+                <h3 class="text-lg font-bold w-full">
+                  {{ isAr() ? "الفيديو" : "Videos" }}
+                </h3>
+                <app-video-uploader [videos]="videos()"></app-video-uploader>
+              </div>
+            </form>
+          </div>
+          <div class="flex pt-6 justify-between">
+            <p-button [label]="isAr() ? 'السابق' : 'Back'" severity="secondary"
+              [icon]="isAr() ? 'pi pi-arrow-right' : 'pi pi-arrow-left'" [iconPos]="isAr() ? 'right' : 'left'"
+              (onClick)="activateCallback(1)" />
+            <p-button [label]="isAr() ? 'التالي' : 'Next'" [icon]="isAr() ? 'pi pi-arrow-left' : 'pi pi-arrow-right'"
+              [iconPos]="isAr() ? 'left' : 'right'" (onClick)="activateCallback(3)" />
+          </div>
+        </ng-template>
+      </p-step-panel>
+
+      <!-- Step 3 -->
+      <p-step-panel [value]="3">
+        <ng-template #content let-activateCallback="activateCallback">
+          <div
+            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950">
+            <form [formGroup]="additionalData()">
+              <div class="grid grid-cols-2 gap-4">
+                <!-- Title -->
+                <p-inputgroup class="my-4 col-span-1">
+                  <p-inputgroup-addon><i class="pi pi-user"></i></p-inputgroup-addon>
+                  <input pInputText formControlName="title" [placeholder]="isAr() ? 'العنوان' : 'Title'"
+                    [appValidateForms]="{ fields: ['required', 'minLength'], value: 3 }" />
+                </p-inputgroup>
+
+                <!-- Description -->
+                <p-inputgroup class="my-4 col-span-1">
+                  <p-inputgroup-addon><i class="pi pi-user-edit"></i></p-inputgroup-addon>
+                  <input pInputText formControlName="description" [placeholder]="isAr() ? 'الوصف' : 'Description'"
+                    [appValidateForms]="{ fields: ['required', 'minLength'], value: 10 }" />
+                </p-inputgroup>
+              </div>
+              <!-- Skills -->
+
+              <p-multiSelect class="mb-4" formControlName="skills" [options]="skills()"
+                [placeholder]="isAr() ? 'اختر المهارات' : 'Select Skills'" display="chip"
+                [appValidateForms]="{ fields: ['required'] }">
+              </p-multiSelect>
+              <p-multiSelect class="mb-4" formControlName="interests" [options]="interests()"
+                [placeholder]="isAr() ? 'اختر اهتماماتك' : 'Select interests'" display="chip"
+                [appValidateForms]="{ fields: ['required'] }">
+              </p-multiSelect>
+            </form>
+          </div>
+          <div class="flex pt-6 justify-between">
+            <p-button [label]="isAr() ? 'السابق' : 'Back'" severity="secondary"
+              [icon]="isAr() ? 'pi pi-arrow-right' : 'pi pi-arrow-left'" [iconPos]="isAr() ? 'right' : 'left'"
+              (onClick)="activateCallback(2)" />
+            <p-button [label]="isAr() ? 'التالي' : 'Next'" [icon]="isAr() ? 'pi pi-arrow-left' : 'pi pi-arrow-right'"
+              [iconPos]="isAr() ? 'left' : 'right'" (onClick)="activateCallback(4)" />
+          </div>
+        </ng-template>
+      </p-step-panel>
+      <p-step-panel [value]="4">
+        <ng-template #content let-activateCallback="activateCallback">
+          <div class="flex flex-col gap-4 w-full">
+            <h3 class="text-xl font-semibold text-center">
+              {{ isAr() ? "مراجعة البيانات" : "Review & Submit" }}
+            </h3>
+
+            <div
+              class="p-4 border border-surface-200 dark:border-surface-700 border-dashed rounded bg-surface-50 dark:bg-surface-950">
+              <p class="flex justify-between border p-2">
+                <strong>{{ isAr() ? "العنوان" : "Title" }}</strong>
+                {{ basicData().get("title")?.value }}
+              </p>
+              <p class="flex justify-between border p-2">
+                <strong>{{ isAr() ? "الوصف" : "Description" }}:</strong>
+                {{ basicData().get("description")?.value }}
+              </p>
+              <p class="flex justify-between border p-2">
+                <strong>{{ isAr() ? "كلمة المرور" : "Password" }}:</strong>
+                {{ basicData().get("password")?.value }}
+              </p>
+              <p class="flex justify-between border p-2">
+                <strong>{{ isAr() ? "الصور" : "Images" }}:</strong>
+                {{ images().length
+                }}{{ isAr() ? "ملفات مرفوعة" : "files uploaded" }}
+              </p>
+              <p class="flex justify-between border p-2">
+                <strong>{{ isAr() ? "الفيديو" : "Videos" }}:</strong>
+                {{ videos().length }}
+                {{ isAr() ? "ملفات مرفوعة" : "files uploaded" }}
+              </p>
+              <p class="flex justify-between border p-2">
+                <strong>{{ isAr() ? "العنوان" : "Title" }}:</strong>
+                {{ (additionalData().get("skills")!.value || []).join(", ") }}
+              </p>
+              <p class="flex justify-between border p-2">
+                <strong>{{ isAr() ? "الوصف" : "Description" }}:</strong>
+                {{
+                (additionalData().get("interests")!.value || []).join(", ")
+                }}
+              </p>
+            </div>
+
+            <div class="flex justify-between mt-4">
+              <p-button [label]="isAr() ? 'السابق' : 'Back'" [icon]="isAr() ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"
+                [iconPos]="isAr() ? 'right' : 'left'" (onClick)="activateCallback(3)" severity="secondary" />
+              <p-button [label]="isAr() ? 'ارسال' : 'Submit'" [icon]="isAr() ? 'pi pi-send' : 'pi pi-check-circle'"
+                [iconPos]="isAr() ? 'left' : 'right'" (onClick)="onSubmit()" />
+            </div>
+          </div>
+        </ng-template>
+      </p-step-panel>
+    </p-step-panels>
+  </p-stepper>
+</div>

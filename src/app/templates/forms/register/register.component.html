@@ -1,0 +1,95 @@
+<form [formGroup]="form()" class="flex flex-col gap-4 w-3/4 mx-auto p-4 border rounded-md shadow mt-6 ">
+
+<div class="grid grid-cols-2 gap-4 py-4">
+  <!-- Title -->
+  <p-inputgroup class="w-full">
+    <p-inputgroup-addon>
+      <i class="pi pi-user"></i>
+    </p-inputgroup-addon>
+    <input pInputText formControlName="title" [placeholder]="isAr() ? 'الاسم' : 'Name'" class="w-full" />
+  </p-inputgroup>
+  <!-- Password -->
+  <p-inputgroup class="w-full">
+    <p-inputgroup-addon>
+      <i class="pi pi-lock"></i>
+    </p-inputgroup-addon>
+    <p-password formControlName="password" [placeholder]="isAr() ? 'كلمة المرور' : 'Password'" [feedback]="true"
+    toggleMask="true" class="w-full">
+  </p-password>
+  </p-inputgroup>
+</div>
+  <!-- Phone -->
+<div class="grid grid-cols-2 gap-4 py-4">
+  <p-inputgroup class="w-full">
+    <p-inputgroup-addon>
+      <i class="pi pi-phone"></i>
+    </p-inputgroup-addon>
+    <input pInputText formControlName="phone" [placeholder]="isAr() ? 'رقم الهاتف' : 'Phone Number'" type="tel"
+      class="w-full" />
+  </p-inputgroup>
+  <!-- Country -->
+  <p-select
+  class="w-full h-12"
+  formControlName="country"
+  [options]="countries()"
+  optionLabel="label"
+  optionValue="value"
+  placeholder="Select Country">
+</p-select>
+</div>
+  <!-- Description -->
+  <textarea pInputTextarea formControlName="description" [placeholder]="isAr() ? 'الوصف' : 'Description'"
+    class="w-full h-28">
+  </textarea>
+
+
+<div class="grid grid-cols-4  gap-4 py-4">
+  <!-- Skills -->
+  <p-multiSelect formControlName="skills" [options]="skills()"
+    [placeholder]="isAr() ? 'اختر المهارات' : 'Select Skills'" display="chip" class="col-span-3 ">
+  </p-multiSelect>
+
+  <!-- Gender -->
+  <div class="col-span-1 flex gap-4 items-center">
+    <label *ngFor="let g of genders()" class="flex items-center">
+      <p-radioButton name="gender" [value]="g.value" formControlName="gender" />
+      <span class="ml-2">{{ g.label }}</span>
+    </label>
+  </div>
+</div>
+    
+
+
+  <div class="grid grid-cols-5 gap-4 py-4">
+  <!-- Date + Time -->
+  <p-datepicker formControlName="dateTime" [showTime]="true" hourFormat="24"
+    [placeholder]="isAr() ? 'اختر التاريخ والوقت' : 'Select Date & Time'" class="col-span-2 ">
+  </p-datepicker>
+
+  <!-- Time Only -->
+  <p-datepicker formControlName="timeOnly" [timeOnly]="true" hourFormat="24"
+    [placeholder]="isAr() ? 'اختر الوقت' : 'Select Time'" class="col-span-2">
+  </p-datepicker>
+
+  <!-- Agreement -->
+  <div class="col-span-1 flex items-center gap-2 ">
+    <p-checkbox formControlName="agree" binary="true"></p-checkbox>
+    <label>{{ isAr() ? 'أنا أتفق' : 'I agree to terms' }}</label>
+  </div>
+</div>
+
+  <!-- Images -->
+  <h3 class="text-lg font-bold w-full">{{ isAr() ? 'الصور' : 'Images' }}</h3>
+  <app-image-uploader [images]="images()"></app-image-uploader>
+
+  <!-- Videos -->
+  <h3 class="text-lg font-bold w-full">{{ isAr() ? 'الفيديو' : 'Videos' }}</h3>
+  <app-video-uploader [videos]="videos()"></app-video-uploader>
+
+  <!-- Submit -->
+  <button type="button" (click)="submit()"
+    class=' transition w-full mx-auto bg-green-500 cursor-pointer text-white p-2 rounded-md flex justify-center text-2xl font-bold hover:bg-green-600 hover:text-white text-center'>
+    {{ isAr() ? 'إرسال' : 'Submit' }}
+    <i class="pi pi-send ml-2 text-white flex items-center justify-center text-center p-2 text-2xl"></i>
+  </button>
+</form>

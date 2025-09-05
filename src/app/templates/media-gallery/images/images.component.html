@@ -1,0 +1,218 @@
+<div class="grid grid-cols-12 w-3/4 mx-auto gap-6">
+    <!-- Block 1: Basic Gallery -->
+    <div class="col-span-12 md:col-span-6">
+      <p-card header="{{ isAr() ? 'المعرض الأساسي' : 'Basic Gallery' }}">
+        <p-galleria
+          [value]="images"
+          [responsiveOptions]="responsiveOptions"
+          [containerStyle]="{ 'max-width': '640px' }"
+          [numVisible]="5"
+        >
+          <ng-template #item let-item>
+            <img [src]="item.itemImageSrc" style="width: 100%" />
+          </ng-template>
+          <ng-template #thumbnail let-item>
+            <img [src]="item.thumbnailImageSrc" />
+          </ng-template>
+        </p-galleria>
+      </p-card>
+    </div>
+  
+    <!-- Block 2: Gallery with Prev/Next -->
+    <div class="col-span-12 md:col-span-6">
+      <p-card header="{{ isAr() ? 'المعرض مع أزرار التنقل' : 'Gallery with Navigation' }}">
+        <div class="mb-4 flex gap-2">
+          <p-button type="button" icon="pi pi-minus" (click)="prev()" />
+          <p-button
+            type="button"
+            icon="pi pi-plus"
+            (click)="next()"
+            severity="secondary"
+          />
+        </div>
+        <p-galleria
+          [value]="images"
+          [responsiveOptions]="responsiveOptions"
+          [containerStyle]="{ 'max-width': '640px' }"
+          [numVisible]="5"
+          [activeIndex]="activeIndex"
+        >
+          <ng-template #item let-item>
+            <img [src]="item.itemImageSrc" style="width: 100%" />
+          </ng-template>
+          <ng-template #thumbnail let-item>
+            <img [src]="item.thumbnailImageSrc" />
+          </ng-template>
+        </p-galleria>
+      </p-card>
+    </div>
+  
+    <!-- Block 3: Indicators Only -->
+    <div class="col-span-12 md:col-span-6">
+      <p-card header="{{ isAr() ? 'المعرض بالمؤشرات فقط' : 'Indicators Only' }}">
+        <p-galleria
+          [value]="images"
+          [showIndicators]="true"
+          [showThumbnails]="false"
+          [containerStyle]="{ 'max-width': '640px' }"
+        >
+          <ng-template #item let-item>
+            <img
+              [src]="item.itemImageSrc"
+              style="width: 100%; display: block"
+            />
+          </ng-template>
+        </p-galleria>
+      </p-card>
+    </div>
+  
+    <!-- Block 4: Hover Indicators -->
+    <div class="col-span-12 md:col-span-6">
+      <p-card header="{{ isAr() ? 'المعرض مع مؤشرات عند التحويم' : 'Hover Indicators' }}">
+        <p-galleria
+        [value]="images"
+          [showIndicators]="true"
+          [showThumbnails]="false"
+          [changeItemOnIndicatorHover]="true"
+          [containerStyle]="{ 'max-width': '640px' }"
+        >
+          <ng-template #item let-item>
+            <img
+              [src]="item.itemImageSrc"
+              style="width: 100%; display: block"
+            />
+          </ng-template>
+        </p-galleria>
+      </p-card>
+    </div>
+    <!-- Block 5: AutoPlay + Circular -->
+<div class="col-span-12 md:col-span-6">
+    <p-card header="{{ isAr() ? 'المعرض الدائري التلقائي' : 'AutoPlay Circular' }}">
+      <p-galleria
+        [value]="images"
+        [showThumbnails]="true"
+        [showIndicators]="true"
+        [autoPlay]="true"
+        [circular]="true"
+        [transitionInterval]="2000"
+        [containerStyle]="{ 'max-width': '640px' }"
+      >
+        <ng-template #item let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%" />
+        </ng-template>
+      </p-galleria>
+    </p-card>
+  </div>
+
+<!-- Block 7: Custom Content -->
+<div class="col-span-12 md:col-span-6">
+    <p-card header="{{ isAr() ? 'معرض بمحتوى مخصص' : 'Custom Content' }}">
+      <p-galleria [value]="images" [containerStyle]="{ 'max-width': '640px' }">
+        <ng-template #item let-item>
+          <div class="relative">
+            <img [src]="item.itemImageSrc" style="width: 100%" />
+            <div class="absolute bottom-0 left-0 bg-black bg-opacity-60 text-white w-full p-2 text-sm">
+              {{ item.alt }}
+            </div>
+          </div>
+        </ng-template>
+        <ng-template #thumbnail let-item>
+          <img [src]="item.thumbnailImageSrc" />
+        </ng-template>
+      </p-galleria>
+    </p-card>
+  </div>
+<!-- Block 8: Responsive Options -->
+<div class="col-span-12 md:col-span-6">
+    <p-card header="{{ isAr() ? 'معرض متجاوب' : 'Responsive Gallery' }}">
+      <p-galleria
+        [value]="images"
+        [numVisible]="5"
+        [responsiveOptions]="responsiveOptions"
+        [containerStyle]="{ 'max-width': '640px' }"
+      >
+        <ng-template #item let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%" />
+        </ng-template>
+      </p-galleria>
+    </p-card>
+  </div>
+<!-- Block 9: Without Thumbnails -->
+<div class="col-span-12 md:col-span-6">
+    <p-card header="{{ isAr() ? 'معرض بدون مصغرات' : 'Without Thumbnails' }}">
+      <p-galleria
+        [value]="images"
+        [showThumbnails]="false"
+        [showIndicators]="true"
+        [containerStyle]="{ 'max-width': '640px' }"
+      >
+        <ng-template #item let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%" />
+        </ng-template>
+      </p-galleria>
+    </p-card>
+  </div>
+<!-- Block 10: Controlled Externally -->
+<div class="col-span-12 md:col-span-6">
+    <p-card header="{{ isAr() ? 'معرض بالتحكم الخارجي' : 'Controlled Gallery' }}">
+      <div class="flex gap-2 mb-3">
+        <p-button label="1" (click)="activeIndex = 0"></p-button>
+        <p-button label="2" (click)="activeIndex = 1"></p-button>
+        <p-button label="3" (click)="activeIndex = 2"></p-button>
+      </div>
+      <p-galleria
+        [value]="images"
+        [(activeIndex)]="activeIndex"
+        [containerStyle]="{ 'max-width': '640px' }"
+      >
+        <ng-template #item let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%" />
+        </ng-template>
+      </p-galleria>
+    </p-card>
+  </div>
+  
+</div>
+<div class="w-3/4 mx-auto grid grid-cols-2">
+<!-- Block 11: Basic Image with Preview -->
+<div class="col-span-1">
+<p-card header="{{ isAr() ? 'صورة مع معاينة' : 'Image with Preview' }}">
+<p-image 
+src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" 
+alt="Image" 
+width="250" 
+[preview]="true">   
+</p-image>
+</p-card>
+</div>
+<!-- Block 12: Image with Custom Indicator -->
+<div class="col-span-1 ">
+<p-card header="{{ isAr() ? 'صورة بمؤشر مخصص' : 'Image with Custom Indicator' }}">
+<p-image 
+src="https://primefaces.org/cdn/primeng/images/galleria/galleria11.jpg" 
+[preview]="true" 
+alt="Image" 
+width="250">
+
+<!-- Custom Indicator -->
+<ng-template #indicator>
+<i class="pi pi-search"></i>
+</ng-template>
+
+<!-- Custom Image Template -->
+<ng-template #image>
+<img src="https://primefaces.org/cdn/primeng/images/galleria/galleria11.jpg" alt="image" width="250" />
+</ng-template>
+
+<!-- Custom Preview Template -->
+<ng-template #preview let-style="style" let-previewCallback="previewCallback">
+<img 
+src="https://primefaces.org/cdn/primeng/images/galleria/galleria11.jpg" 
+alt="image" 
+[style]="style" 
+(click)="previewCallback()" />
+</ng-template>
+</p-image>
+</p-card>
+</div>
+</div>

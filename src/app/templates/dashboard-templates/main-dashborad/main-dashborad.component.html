@@ -1,0 +1,126 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-12 w-full px-4 lg:px-0 lg:w-3/4 mx-auto">
+
+    <!-- Orders -->
+    <p-card [styleClass]="theme() === 'dark' ? 'bg-blue-200 text-blue-900' : 'bg-blue-50 text-blue-900 border border-blue-100 shadow-sm'">
+      <div class="flex justify-content-between align-items-center mb-3">
+        <div>
+          <span class="font-medium">{{ isAr() ? 'الطلبات' : 'Orders' }}</span>
+          <div class="text-xl font-bold">152</div>
+        </div>
+        <div [ngClass]="theme() === 'dark' ? 'bg-blue-400' : 'bg-blue-600'" 
+             class="w-10 h-10 flex align-items-center justify-content-center rounded-full">
+          <i class="pi pi-shopping-cart" style="display: block; text-align: center; width: 100%; line-height: 40px;"></i>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <span [ngClass]="theme() === 'dark' ? 'text-blue-800' : 'text-blue-700'" class="font-medium">24 {{isAr() ? 'جديد' : 'new'}}</span>
+        <span [ngClass]="theme() === 'dark' ? 'text-white' : 'text-gray-700'">{{isAr() ? 'منذ الأسبوع الماضي' : 'since last week'}}</span>
+      </div>
+    </p-card>
+  
+    <!-- Revenue -->
+    <p-card [styleClass]="theme() === 'dark' ? 'bg-orange-200 text-orange-900' : 'bg-orange-50 text-orange-900 border border-orange-100 shadow-sm'">
+      <div class="flex justify-content-between align-items-center mb-3">
+        <div>
+          <span class="font-medium">{{isAr() ? 'الإيرادات' : 'Revenue'}}</span>
+          <div class="text-xl font-bold">$2,100</div>
+        </div>
+        <div [ngClass]="theme() === 'dark' ? 'bg-orange-400' : 'bg-orange-600'" 
+             class="w-10 h-10 flex align-items-center justify-content-center rounded-full">
+          <i class="pi pi-dollar" style="display: block; text-align: center; width: 100%; line-height: 40px;"></i>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <span [ngClass]="theme() === 'dark' ? 'text-orange-800' : 'text-orange-700'" class="font-medium">%52+</span>
+        <span [ngClass]="theme() === 'dark' ? 'text-white' : 'text-gray-700'">{{isAr() ? 'منذ الأسبوع الماضي' : 'since last week'}}</span>
+      </div>
+    </p-card>
+  
+    <!-- Customers -->
+    <p-card [styleClass]="theme() === 'dark' ? 'bg-cyan-200 text-cyan-900' : 'bg-cyan-50 text-cyan-900 border border-cyan-100 shadow-sm'">
+      <div class="flex justify-content-between align-items-center mb-3">
+        <div>
+          <span class="font-medium">{{isAr() ? 'العملاء' : 'Customers'}}</span>
+          <div class="text-xl font-bold">28,441</div>
+        </div>
+        <div [ngClass]="theme() === 'dark' ? 'bg-cyan-400' : 'bg-cyan-600'" 
+             class="w-10 h-10 flex align-items-center justify-content-center rounded-full">
+          <i class="pi pi-users" style="display: block; text-align: center; width: 100%; line-height: 40px;"></i>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <span [ngClass]="theme() === 'dark' ? 'text-cyan-800' : 'text-cyan-700'" class="font-medium">520</span>
+        <span [ngClass]="theme() === 'dark' ? 'text-white' : 'text-gray-700'">{{isAr() ? 'التسجيل الجديد' : 'newly registered'}}</span>
+      </div>
+    </p-card>
+  
+    <!-- Comments -->
+    <p-card [styleClass]="theme() === 'dark' ? 'bg-purple-200 text-purple-900' : 'bg-purple-50 text-purple-900 border border-purple-100 shadow-sm'">
+      <div class="flex justify-content-between align-items-center mb-3">
+        <div>
+          <span class="font-medium">{{isAr() ? 'التعليقات' : 'Comments'}}</span>
+          <div class="text-xl font-bold">152</div>
+        </div>
+        <div [ngClass]="theme() === 'dark' ? 'bg-purple-400' : 'bg-purple-600'" 
+             class="w-10 h-10 flex align-items-center justify-content-center rounded-full">
+          <i class="pi pi-comment" style="display: block; text-align: center; width: 100%; line-height: 40px;"></i>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <span [ngClass]="theme() === 'dark' ? 'text-purple-800' : 'text-purple-700'" class="font-medium">85</span>
+        <span [ngClass]="theme() === 'dark' ? 'text-white' : 'text-gray-700'">{{isAr() ? 'الرد' : 'responded'}}</span>
+      </div>
+    </p-card>
+  
+  </div>
+
+
+
+
+
+
+
+<div class="grid grid-cols-2 mx-36 my-12">
+
+
+  <div class="w-full lg:w-3/4 mx-auto px-4 lg:px-0 mb-8">
+    <div class="card p-4" [ngClass]="{'bg-white border border-gray-200 shadow-sm': theme() !== 'dark', 'bg-gray-800 border-gray-700': theme() === 'dark'}">
+      <div [ngClass]="theme() === 'dark' ? 'text-white' : 'text-gray-800'" class="font-semibold text-xl mb-4">
+        {{ isAr() ? 'مصادر الإيرادات' : 'Revenue Sources' }}
+      </div>
+      <div class="relative" style="height: 500px">
+        <p-chart 
+          type="bar" 
+          [data]="getChartData()" 
+          [options]="revenueChartOptions" 
+          style="display: block; width: 100%; height: 100%"
+        ></p-chart>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-8!">
+    <div class="font-semibold text-xl mb-4">{{isAr() ? 'البضائع' : 'Products'}}</div>
+    <p-table [value]="products" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+        <ng-template #header>
+            <tr>
+                <th>{{isAr() ? 'الصورة' : 'Image'}}</th>
+                <th pSortableColumn="name">{{isAr() ? 'الاسم' : 'Name'}} <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="price">{{isAr() ? 'السعر' : 'Price'}} <p-sortIcon field="price"></p-sortIcon></th>
+                <th>{{isAr() ? 'عرض' : 'View'}}</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-product>
+            <tr>
+                <td style="width: 15%; min-width: 5rem;">
+                    <img src="https://primefaces.org/cdn/primevue/images/product/{{ product.image }}" class="shadow-lg" alt="{{ product.name }}" width="50" />
+                </td>
+                <td style="width: 35%; min-width: 7rem;">{{ product.name }}</td>
+                <td style="width: 35%; min-width: 8rem;">{{ product.price | currency: 'USD' }}</td>
+                <td style="width: 15%;">
+                    <button pButton pRipple type="button" icon="pi pi-search" class="p-button p-component p-button-text p-button-icon-only"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+  </div>

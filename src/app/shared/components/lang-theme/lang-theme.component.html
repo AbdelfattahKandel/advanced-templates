@@ -1,0 +1,18 @@
+<main >
+    <div class=" h-1/10 flex justify-start" [dir]="languageService.isAr() ? 'rtl' : 'ltr'" >
+      <button type="button"
+              class=" p-6 flex items-center gap-2"
+              (click)="toggleLang()"
+              [title]="languageService.isAr() ? 'English' : 'العربية'">
+              <label    >{{languageService.isAr() ? 'English' : 'العربية'}}</label>
+        <i class="pi pi-globe"></i>
+      </button>
+      <button type="button"
+              class="p-6 flex items-center gap-2"
+              (click)="toggleTheme()"
+              [title]="themeService.theme() === 'dark' ? 'Light' : 'Dark'">
+              <label >{{themeService.theme() === 'dark' ? 'Light' : 'Dark'}}</label>
+        <i class="pi" [ngClass]="themeService.theme() === 'dark' ? 'pi-sun' : 'pi-moon'"></i>
+      </button>
+    </div>
+</main>

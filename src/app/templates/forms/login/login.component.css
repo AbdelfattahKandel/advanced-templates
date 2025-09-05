@@ -1,0 +1,10 @@
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-password {
+    
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+
+

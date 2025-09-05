@@ -1,0 +1,49 @@
+<nav class="flex items-center justify-between gap-2 w-9/12 shadow-lg rounded-md p-2 mx-auto relative border-b-1">
+  <!-- Main Menu -->
+  <div class="flex items-center gap-2">
+    @for(tab of menuItems(); track tab.id) {
+      @if (!tab.items) {
+        <!-- Single Link -->
+        <a [routerLink]="tab.routerLink"
+           class="p-2 rounded-md flex items-center gap-2 transition-colors duration-200
+                  hover:surface-100 dark:hover:surface-700">
+          <i [class]="tab.icon"></i>
+          <span>{{ tab.label }}</span>
+        </a>
+      } @else {
+        <!-- Dropdown -->
+        <div class="relative">
+          <button type="button"
+                  (click)="toggleMenu(tab)"
+                  class="p-2 rounded-md flex items-center gap-2 transition-colors duration-200
+                         hover:surface-100 dark:hover:surface-700">
+            <i [class]="tab.icon"></i>
+            <span>{{ tab.label }}</span>
+            <i class="pi pi-chevron-down text-xs ml-1"></i>
+          </button>
+
+          <!-- Dropdown Items -->
+          <div class="absolute left-0 mt-1 w-48 surface-card dark:surface-overlay shadow-lg rounded-md overflow-hidden
+                      transform origin-top transition-transform duration-200 z-50" [ngClass]="theme() === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'"
+               [class.scale-y-0]="openMenuId !== tab.id"
+               [class.scale-y-100]="openMenuId === tab.id" >
+            @for(sub of tab.items; track sub.label) {
+              <a [routerLink]="sub.routerLink"
+                 (click)="openMenuId=null"
+                 class="block px-4 py-2 transition-colors duration-200 hover:surface-100 dark:hover:surface-700">
+                {{ sub.label }}
+              </a>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Lang + Theme Switch -->
+  <app-lang-theme></app-lang-theme>
+</nav>
+
+<!-- Main content -->
+<router-outlet>
+</router-outlet>

@@ -1,0 +1,95 @@
+<div class="w-3/4 mx-auto my-12">
+
+    <!-- Row Expansion -->
+    <div class="card">
+      <div class="font-semibold text-xl mb-4">Shipments with Row Expansion</div>
+      <p-table [value]="shipments" dataKey="id" [expandedRowKeys]="expandedRows">
+        <ng-template #header>
+          <tr>
+            <th style="width:3rem"></th>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Destination</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-shipment let-expanded="expanded">
+          <tr>
+            <td>
+              <p-button type="button" [pRowToggler]="shipment" [text]="true" [rounded]="true"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"/>
+            </td>
+            <td>{{ shipment.id }}</td>
+            <td>{{ shipment.customer }}</td>
+            <td>{{ shipment.destination }}</td>
+            <td><p-tag [value]="shipment.status" [severity]="getSeverity(shipment.status)"/></td>
+          </tr>
+        </ng-template>
+        <ng-template #expandedrow let-shipment>
+          <tr>
+            <td colspan="5">
+              <div class="p-4">
+                <h5>Details for {{ shipment.id }}</h5>
+                <p>Estimated Delivery: {{ shipment.deliveryDate }}</p>
+                <p>Courier: {{ shipment.courier }}</p>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  
+    <div class="card">
+        <div class="font-semibold text-xl mb-4">Grouping</div>
+        <p-table [value]="customers3" sortField="representative.name" sortMode="single" [scrollable]="true" scrollHeight="400px" rowGroupMode="subheader" groupRowsBy="representative.name" [tableStyle]="{ 'min-width': '60rem' }">
+            <ng-template #header>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </ng-template>
+            <ng-template #groupheader let-customer>
+                <tr pRowGroupHeader>
+                    <td colspan="5">
+                        <div class="flex items-center gap-2">
+                            <img [alt]="customer.representative.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
+                            <span class="font-bold">{{ customer.representative.name }}</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #groupfooter let-customer>
+                <tr>
+                    <td colspan="5" class="text-right font-bold pr-12">Total Customers: {{ calculateCustomerTotal(customer.representative.name) }}</td>
+                </tr>
+            </ng-template>
+            <ng-template #body let-customer let-rowIndex="rowIndex">
+                <tr>
+                    <td>
+                        {{ customer.name }}
+                    </td>
+                    <td>
+                        <div class="flex items-center gap-2">
+                            <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" style="width: 20px" />
+                            <span>{{ customer.country.name }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        {{ customer.company }}
+                    </td>
+                    <td>
+                        <p-tag [value]="customer.status" [severity]="getSeverity(customer.status)" />
+                    </td>
+                    <td>
+                        {{ customer.date }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+  
+  </div>
+  
