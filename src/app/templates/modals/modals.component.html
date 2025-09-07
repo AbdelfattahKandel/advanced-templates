@@ -10,23 +10,29 @@
     </div>
   
     <!-- Modal 1: View Data with Table and Images -->
-    <p-dialog header="View Data" [(visible)]="displayView" [modal]="true" [closable]="true" [style]="{ width: '600px' }">
+    <p-dialog header="View Data" [(visible)]="displayView" [modal]="true" [closable]="true" [style]="{ width: '1200px' }">
       <p-table [value]="users">
         <ng-template pTemplate="header">
-          <tr>
+          <tr class="text-center">
             <th>Avatar</th>
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
             <th>Action</th>
+            <th>Joined</th>
+            <th>Score</th>
+            <th>Action</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
-          <tr>
+          <tr >
             <td><img [src]="user.avatar" width="50" style="border-radius:50%;" /></td>
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.role}}</td>
+            <td>{{user.status}}</td>
+            <td>{{user.joined}}</td>
+            <td>{{user.score}}</td>
             <td><p-button icon="pi pi-eye" (click)="selectUser(user)" tooltip="View"></p-button></td>
           </tr>
         </ng-template>
@@ -46,10 +52,8 @@
         <label>Role</label>
         <input pInputText [(ngModel)]="editedData.role" />
       </div>
-      <p-footer>
         <p-button label="Save" (click)="saveEdit()" severity="success"></p-button>
         <p-button label="Cancel" (click)="displayEdit=false" class="ml-2"></p-button>
-      </p-footer>
     </p-dialog>
   
     <!-- Modal 3: Confirm Action -->

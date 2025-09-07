@@ -49,6 +49,7 @@ export class ModalsComponent {
   }
 
   saveEdit() {
+    debugger
     const index = this.users.findIndex(u => u.id === this.editedData.id);
     if (index !== -1) this.users[index] = { ...this.editedData };
     this.displayEdit = false;

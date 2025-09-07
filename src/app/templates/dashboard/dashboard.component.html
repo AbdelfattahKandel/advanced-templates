@@ -104,7 +104,7 @@
   
             <div>
               <label class="block text-sm">Category</label>
-              <p-dropdown [options]="categories" optionLabel="toString" formControlName="category" placeholder="Select category"></p-dropdown>
+              <p-select [options]="categories" optionLabel="toString" formControlName="category" placeholder="Select category"></p-select>
             </div>
   
             <div class="grid grid-cols-2 gap-3">
@@ -131,7 +131,7 @@
   
         <p-card header="Filters">
           <div class="space-y-3">
-            <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" placeholder="Filter by category"></p-dropdown>
+            <p-select [options]="categories" [(ngModel)]="selectedCategory" placeholder="Filter by category"></p-select>
             <div class="flex gap-2">
               <button pButton type="button" label="Apply" class="p-button-primary" (click)="$event"></button>
               <button pButton type="button" label="Clear" class="p-button-text" (click)="selectedCategory = null"></button>
@@ -236,7 +236,7 @@
           </div>
           <div class="p-field">
             <label>Category</label>
-            <p-dropdown [options]="categories" [(ngModel)]="editingProduct.category"></p-dropdown>
+            <p-select [options]="categories" [(ngModel)]="editingProduct.category"></p-select>
           </div>
           <div class="p-field grid grid-cols-2 gap-2">
             <div>

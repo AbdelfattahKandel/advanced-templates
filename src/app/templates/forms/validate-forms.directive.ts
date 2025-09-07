@@ -73,17 +73,17 @@ export class ValidateFormsDirective implements Validator {
           }
           break;
 
-        case 'fileRequired':
-          if (!value || (Array.isArray(value) && value.length === 0)) {
-            errors['fileRequired'] = true;
-          }
-          break;
+        // case 'fileRequired':
+        //   if (!value || (Array.isArray(value) && value.length === 0)) {
+        //     errors['fileRequired'] = true;
+        //   }
+        //   break;
 
-        case 'multiSelectRequired':
-          if (!Array.isArray(value) || value.length === 0) {
-            errors['multiSelectRequired'] = true;
-          }
-          break;
+        // case 'multiSelectRequired':
+        //   if (!Array.isArray(value) || value.length === 0) {
+        //     errors['multiSelectRequired'] = true;
+        //   }
+        //   break;
       }
     }
 

@@ -34,7 +34,7 @@ export const routes: Routes = [
       { path: 'users-table', loadComponent: () => import('./templates/tables/users-table/users-table.component').then(m => m.UsersTableComponent) },
       { path: 'shipments-table', loadComponent: () => import('./templates/tables/shipments-table/shipments-table.component').then(m => m.ShipmentsTableComponent) },
 
-      // Kanban
+      // Charts
       { path: 'charts', loadComponent: () => import('./templates/kanban/charts/chart.component').then(m => m.ChartComponent) },
 
       // Media

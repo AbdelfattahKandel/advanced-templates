@@ -4,7 +4,7 @@ export type Theme = 'light' | 'dark';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  readonly theme = signal<Theme>('light');
+   theme = signal<Theme>('light');
 
   constructor() {
     const saved = localStorage.getItem('theme') as Theme | null;
@@ -12,12 +12,12 @@ export class ThemeService {
     this.theme.set(saved ?? (systemPrefersDark ? 'dark' : 'light'));
 
     effect(() => {
-      const t = this.theme();
-      document.documentElement.classList.toggle('my-app-dark', t === 'dark');
-      localStorage.setItem('theme', t);
+      const toggle = this.theme();
+      document.documentElement.classList.toggle('my-app-dark', toggle === 'dark');
+      localStorage.setItem('theme', toggle);
     });
   }
 
-  setTheme(t: Theme) { this.theme.set(t); }
+  setTheme(toggle: Theme) { this.theme.set(toggle); }
   toggle() { this.theme.set(this.theme() === 'dark' ? 'light' : 'dark'); }
 }

@@ -9,7 +9,6 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
@@ -20,6 +19,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
 import { PanelModule } from 'primeng/panel';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SelectModule } from 'primeng/select';
 
 interface Product {
   id: string;
@@ -51,7 +51,6 @@ interface Order {
     ButtonModule,
     InputTextModule,
     InputNumberModule,
-    DropdownModule,
     CalendarModule,
     DialogModule,
     TagModule,
@@ -62,7 +61,8 @@ interface Order {
     TooltipModule,
     PanelModule,
     CheckboxModule,
-    FormsModule
+    FormsModule,
+    SelectModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
